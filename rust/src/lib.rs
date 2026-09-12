@@ -19,7 +19,7 @@ fn throw_exception(env: &mut JNIEnv, class: &str, msg: &str) {
 }
 
 #[no_mangle]
-pub extern "system" fn Java_com_shinkai_wallpapers_NativeLib_fetchWallpapers(
+pub extern "system" fn Java_com_shinkai_wallpapers_NativeLib_fetchWallpapersNative(
     mut env: JNIEnv,
     _class: JClass,
     url: JString,
@@ -49,7 +49,7 @@ pub extern "system" fn Java_com_shinkai_wallpapers_NativeLib_fetchWallpapers(
 }
 
 #[no_mangle]
-pub extern "system" fn Java_com_shinkai_wallpapers_NativeLib_downloadImage(
+pub extern "system" fn Java_com_shinkai_wallpapers_NativeLib_downloadImageNative(
     mut env: JNIEnv,
     _class: JClass,
     url: JString,
@@ -101,7 +101,7 @@ pub extern "system" fn Java_com_shinkai_wallpapers_NativeLib_downloadImage(
 }
 
 #[no_mangle]
-pub extern "system" fn Java_com_shinkai_wallpapers_NativeLib_hashKey(
+pub extern "system" fn Java_com_shinkai_wallpapers_NativeLib_hashKeyNative(
     mut env: JNIEnv,
     _class: JClass,
     key: JString,
