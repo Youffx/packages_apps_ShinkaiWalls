@@ -8,11 +8,7 @@ import android.os.Looper
 import android.util.LruCache
 import android.widget.ImageView
 import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
 import java.lang.ref.WeakReference
-import java.net.URL
-import java.security.MessageDigest
 import java.util.concurrent.Executors
 
 object ImageLoader {
@@ -20,7 +16,6 @@ object ImageLoader {
     private val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
     private val cacheSize = maxMemory / 8
 
-    // Memory Cache (RAM)
     private val memoryCache = object : LruCache<String, Bitmap>(cacheSize) {
         override fun sizeOf(key: String, bitmap: Bitmap): Int {
             return bitmap.byteCount / 1024
@@ -33,7 +28,6 @@ object ImageLoader {
     fun load(context: Context, imageUrl: String, imageView: ImageView, targetWidth: Int = 0, targetHeight: Int = 0) {
         imageView.tag = imageUrl
 
-        // 1. Cek Memory Cache (Instan dari RAM)
         val cachedBitmap = memoryCache.get(imageUrl)
         if (cachedBitmap != null) {
             imageView.setImageBitmap(cachedBitmap)
@@ -45,19 +39,10 @@ object ImageLoader {
 
         executor.execute {
             try {
-                // Konversi URL menjadi nama file unik menggunakan MD5
-                val fileName = hashKeyForDisk(imageUrl)
-                val cacheDir = File(context.cacheDir, "image_cache")
-                if (!cacheDir.exists()) cacheDir.mkdirs()
-                
-                val localFile = File(cacheDir, fileName)
+                val cacheDir = context.cacheDir.absolutePath
+                val localPath = NativeLib.downloadImage(imageUrl, cacheDir)
+                val localFile = File(localPath)
 
-                // 2. Cek Disk Cache (Penyimpanan HP)
-                if (!localFile.exists()) {
-                    downloadToFile(imageUrl, localFile)
-                }
-
-                // 3. Decode Gambar dengan Downsampling
                 val bitmap = decodeSampledBitmapFromFile(localFile.absolutePath, targetWidth, targetHeight)
 
                 if (bitmap != null) {
@@ -76,30 +61,6 @@ object ImageLoader {
         }
     }
 
-    private fun downloadToFile(urlString: String, file: File) {
-        val url = URL(urlString)
-        val connection = url.openConnection()
-        connection.connectTimeout = 10_000
-        connection.readTimeout = 10_000
-        
-        val input: InputStream = connection.getInputStream()
-        val tempFile = File(file.parent, "${file.name}.tmp")
-        val output = FileOutputStream(tempFile)
-
-        val buffer = ByteArray(4096)
-        var bytesRead: Int
-        while (input.read(buffer).also { bytesRead = it } != -1) {
-            output.write(buffer, 0, bytesRead)
-        }
-
-        output.flush()
-        output.close()
-        input.close()
-
-        // Rename file sementara ke file asli jika download selesai
-        tempFile.renameTo(file)
-    }
-
     private fun decodeSampledBitmapFromFile(path: String, reqWidth: Int, reqHeight: Int): Bitmap? {
         if (reqWidth <= 0 || reqHeight <= 0) {
             return BitmapFactory.decodeFile(path)
@@ -110,7 +71,6 @@ object ImageLoader {
         }
         BitmapFactory.decodeFile(path, options)
 
-        // Hitung faktor downsampling
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
         options.inJustDecodeBounds = false
 
@@ -131,11 +91,4 @@ object ImageLoader {
         }
         return inSampleSize
     }
-
-    private fun hashKeyForDisk(key: String): String {
-        val digest = MessageDigest.getInstance("MD5")
-        digest.update(key.toByteArray())
-        return digest.digest().joinToString("") { "%02x".format(it) }
-    }
 }
-

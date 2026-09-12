@@ -18,7 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
-import java.net.URL
 
 class MainActivity : AppCompatActivity() {
     
@@ -103,18 +102,17 @@ class MainActivity : AppCompatActivity() {
     private fun fetchWallpapersOnline() {
         lifecycleScope.launch {
             try {
-                val wallpapers = withContext(Dispatchers.IO) {
-                    val json = URL(JSON_URL).readText()
-                    val arr = JSONArray(json)
-                    (0 until arr.length()).map { i ->
-                        val o = arr.getJSONObject(i)
-                        
-                        val name = o.getString("name")
-                        val imageUrl = o.getString("thumbnail_url")
-                        val fullUrl = o.getString("full_url")
-                        
-                        Wallpaper(name, imageUrl, fullUrl)
-                    }
+                val json = withContext(Dispatchers.IO) {
+                    NativeLib.fetchWallpapers(JSON_URL)
+                }
+                val arr = JSONArray(json)
+                val wallpapers = (0 until arr.length()).map { i ->
+                    val o = arr.getJSONObject(i)
+                    Wallpaper(
+                        o.getString("name"),
+                        o.getString("thumbnail_url"),
+                        o.getString("full_url")
+                    )
                 }
                 allWallpapers = wallpapers
                 setupAdapter(grid, allWallpapers)
