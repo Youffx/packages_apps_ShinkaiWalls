@@ -78,6 +78,12 @@ tasks.register("buildRustRelease") {
                 environment("RUSTFLAGS", "-C link-arg=-s")
             }
 
+            val nestedSo = targetDir.walkTopDown().firstOrNull { it.name == "libshinkai.so" && it.parentFile != targetDir }
+            if (nestedSo != null) {
+                nestedSo.renameTo(targetDir.resolve("libshinkai.so"))
+                targetDir.listFiles()?.filter { it.isDirectory && it != targetDir }?.forEach { it.deleteRecursively() }
+            }
+
             println("  -> ${targetDir.resolve("libshinkai.so").absolutePath}")
         }
 
