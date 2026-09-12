@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Shinkai Walls</string>
+
+    <!-- Search -->
+    <string name="search_title">Search</string>
+    <string name="search_hint">Find wallpaper…</string>
+    <string name="searchPositiveButton">Search</string>
+    <string name="searchNegativeButton">Cancel</string>
+    <string name="search_not_found_title">Wallpaper Not Found</string>
+    <string name="search_not_found_message">The wallpaper you are looking for is unavailable or could not be found.</string>
+    <string name="search_not_found_dismiss">OK</string>
+
+    <!-- About -->
+    <string name="about_title">About App</string>
+    <string name="about_message">Shinkai Walls\n\nDeveloper: Mnskkyy\nDesainer: SheMyWifee\n\nVersion 1.0</string>
+    <string name="about_dismiss">Nice!</string>
+
+    <!-- Errors -->
+    <string name="error_network">Failed to load data from internet</string>
+
+    <!-- Preview -->
+    <string name="preview_select_screen">Select at least 1 screen!!</string>
+    <string name="preview_wallpaper_set">Wallpaper successfully installed.</string>
+    <string name="preview_wallpaper_failed">Failed: %s</string>
 </resources>

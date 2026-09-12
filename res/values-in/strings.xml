@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Shinkai Walls</string>
+
+    <!-- Search -->
+    <string name="search_title">Cari</string>
+    <string name="search_hint">Cari wallpaper…</string>
+    <string name="searchPositiveButton">Cari</string>
+    <string name="searchNegativeButton">Batal</string>
+    <string name="search_not_found_title">Wallpaper Tidak Ditemukan</string>
+    <string name="search_not_found_message">Wallpaper yang Anda cari tidak tersedia atau tidak dapat ditemukan.</string>
+    <string name="search_not_found_dismiss">OK</string>
+
+    <!-- About -->
+    <string name="about_title">Tentang Aplikasi</string>
+    <string name="about_message">Shinkai Walls\n\nDeveloper: Mnskkyy\nDesainer: SheMyWifee\n\nVersi 1.0</string>
+    <string name="about_dismiss"> Mantap!</string>
+
+    <!-- Errors -->
+    <string name="error_network">Gagal memuat data dari internet</string>
+
+    <!-- Preview -->
+    <string name="preview_select_screen">Pilih minimal 1 layar!!</string>
+    <string name="preview_wallpaper_set">Wallpaper berhasil dipasang.</string>
+    <string name="preview_wallpaper_failed">Gagal: %s</string>
+</resources>

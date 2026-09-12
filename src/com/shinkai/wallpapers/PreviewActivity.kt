@@ -77,7 +77,7 @@ class PreviewActivity : AppCompatActivity() {
             if (cbHome.isChecked) flag = flag or WallpaperManager.FLAG_SYSTEM
 
             if (flag == 0) {
-                Toast.makeText(this, "select at least 1 screen!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.preview_select_screen, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -129,7 +129,7 @@ class PreviewActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     if (!isFinishing && !isDestroyed) {
                         loadingDialog.dismiss()
-                        Toast.makeText(this@PreviewActivity, "Wallpaper successfully installed.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@PreviewActivity, R.string.preview_wallpaper_set, Toast.LENGTH_SHORT).show()
                         finish()
                     }
                 }
@@ -144,7 +144,7 @@ class PreviewActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     if (!isFinishing && !isDestroyed) {
                         loadingDialog.dismiss()
-                        Toast.makeText(this@PreviewActivity, "Failed: ${e.message}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@PreviewActivity, getString(R.string.preview_wallpaper_failed, e.message), Toast.LENGTH_LONG).show()
                     }
                 }
             }
