@@ -107,6 +107,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun playShapesAnimation() {
         val overlay = findViewById<FrameLayout>(R.id.shapes_overlay)
+        val mainContent = findViewById<View>(R.id.main_content)
         val circle = findViewById<ImageView>(R.id.shape_circle)
         val triangle = findViewById<ImageView>(R.id.shape_triangle)
         val flower = findViewById<ImageView>(R.id.shape_flower)
@@ -172,8 +173,13 @@ class MainActivity : AppCompatActivity() {
             playTogether(animCircle, animTriangle, animFlower, animDiamond)
             addListener(object : android.animation.AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: android.animation.Animator) {
+                    mainContent.animate()
+                        .alpha(1f)
+                        .setDuration(300)
+                        .start()
                     overlay.animate()
                         .alpha(0f)
+                        .setStartDelay(200)
                         .setDuration(400)
                         .withEndAction { overlay.visibility = View.GONE }
                         .start()
