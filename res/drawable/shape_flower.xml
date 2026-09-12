@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="160dp"
+    android:height="160dp"
+    android:viewportWidth="160"
+    android:viewportHeight="160">
+    <!-- Flower/cloud blob shape -->
+    <path
+        android:fillColor="#8AABC4"
+        android:pathData="M80,25 C100,15 130,30 135,55 C140,80 125,105 110,115 C95,125 100,150 80,150 C60,150 55,125 45,115 C25,100 15,80 25,55 C35,30 60,15 80,25 Z" />
+</vector>

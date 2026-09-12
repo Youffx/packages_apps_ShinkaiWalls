@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="180dp"
+    android:height="180dp"
+    android:viewportWidth="180"
+    android:viewportHeight="180">
+    <!-- Rounded diamond/square blob -->
+    <path
+        android:fillColor="#C5DCE8"
+        android:pathData="M90,15 C130,15 165,50 165,90 C165,130 130,165 90,165 C50,165 15,130 15,90 C15,50 50,15 90,15 Z" />
+</vector>

@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Rounded triangle blob -->
+    <path
+        android:fillColor="#5A7A96"
+        android:pathData="M100,20 C140,20 180,50 180,100 C180,150 140,185 100,185 C60,185 25,155 20,110 C15,70 55,20 100,20 Z" />
+    <!-- Three white bars -->
+    <path
+        android:fillColor="#D6E4EE"
+        android:pathData="M68,65 L78,65 L78,130 L68,130 Z"
+        android:strokeWidth="4"
+        android:strokeColor="#D6E4EE"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#D6E4EE"
+        android:pathData="M90,55 L100,55 L100,140 L90,140 Z"
+        android:strokeWidth="4"
+        android:strokeColor="#D6E4EE"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#D6E4EE"
+        android:pathData="M112,75 L122,75 L122,120 L112,120 Z"
+        android:strokeWidth="4"
+        android:strokeColor="#D6E4EE"
+        android:strokeLineCap="round" />
+</vector>

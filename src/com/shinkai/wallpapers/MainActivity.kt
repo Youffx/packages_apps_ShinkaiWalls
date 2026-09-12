@@ -1,11 +1,16 @@
 package com.shinkai.wallpapers
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -49,7 +54,8 @@ class MainActivity : AppCompatActivity() {
             MaterialColors.getColor(swipeRefresh, com.google.android.material.R.attr.colorSurface)
         )
         swipeRefresh.setOnRefreshListener {
-            fetchWallpapersOnline()
+        fetchWallpapersOnline()
+        playShapesAnimation()
         }
 
         fetchWallpapersOnline()
@@ -96,6 +102,84 @@ class MainActivity : AppCompatActivity() {
                     setupAdapter(grid, allWallpapers)
                 }
                 .show()
+        }
+    }
+
+    private fun playShapesAnimation() {
+        val overlay = findViewById<FrameLayout>(R.id.shapes_overlay)
+        val circle = findViewById<ImageView>(R.id.shape_circle)
+        val triangle = findViewById<ImageView>(R.id.shape_triangle)
+        val flower = findViewById<ImageView>(R.id.shape_flower)
+        val diamond = findViewById<ImageView>(R.id.shape_diamond)
+
+        val dp = resources.displayMetrics.density
+
+        circle.translationY = -200f * dp
+        circle.translationX = -100f * dp
+        triangle.translationX = -300f * dp
+        triangle.translationY = 150f * dp
+        flower.translationX = 300f * dp
+        flower.translationY = 100f * dp
+        diamond.translationY = 400f * dp
+        diamond.translationX = 50f * dp
+
+        val duration = 900L
+
+        val animCircle = AnimatorSet().apply {
+            playTogether(
+                ObjectAnimator.ofFloat(circle, "alpha", 0f, 1f),
+                ObjectAnimator.ofFloat(circle, "translationX", -100f * dp, 0f),
+                ObjectAnimator.ofFloat(circle, "translationY", -200f * dp, 0f)
+            )
+            this.duration = duration
+            interpolator = DecelerateInterpolator()
+        }
+
+        val animTriangle = AnimatorSet().apply {
+            playTogether(
+                ObjectAnimator.ofFloat(triangle, "alpha", 0f, 1f),
+                ObjectAnimator.ofFloat(triangle, "translationX", -300f * dp, 0f),
+                ObjectAnimator.ofFloat(triangle, "translationY", 150f * dp, 0f)
+            )
+            this.duration = duration
+            startDelay = 150
+            interpolator = DecelerateInterpolator()
+        }
+
+        val animFlower = AnimatorSet().apply {
+            playTogether(
+                ObjectAnimator.ofFloat(flower, "alpha", 0f, 1f),
+                ObjectAnimator.ofFloat(flower, "translationX", 300f * dp, 0f),
+                ObjectAnimator.ofFloat(flower, "translationY", 100f * dp, 0f)
+            )
+            this.duration = duration
+            startDelay = 300
+            interpolator = DecelerateInterpolator()
+        }
+
+        val animDiamond = AnimatorSet().apply {
+            playTogether(
+                ObjectAnimator.ofFloat(diamond, "alpha", 0f, 1f),
+                ObjectAnimator.ofFloat(diamond, "translationX", 50f * dp, 0f),
+                ObjectAnimator.ofFloat(diamond, "translationY", 400f * dp, 0f)
+            )
+            this.duration = duration
+            startDelay = 450
+            interpolator = DecelerateInterpolator()
+        }
+
+        AnimatorSet().apply {
+            playTogether(animCircle, animTriangle, animFlower, animDiamond)
+            addListener(object : android.animation.AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: android.animation.Animator) {
+                    overlay.animate()
+                        .alpha(0f)
+                        .setDuration(400)
+                        .withEndAction { overlay.visibility = View.GONE }
+                        .start()
+                }
+            })
+            start()
         }
     }
 
