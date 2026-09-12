@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+    branches: [ heptakaideka-debug ]
+  pull_request:
+    branches: [ heptakaideka-debug ]
+
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/heptakaideka-debug' }}
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts', 'gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --build-cache
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: shinkaiwalls-debug
+          path: build/outputs/apk/debug/ShinkaiWalls-debug.apk
