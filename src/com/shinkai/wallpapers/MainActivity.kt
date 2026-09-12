@@ -54,10 +54,11 @@ class MainActivity : AppCompatActivity() {
             MaterialColors.getColor(swipeRefresh, com.google.android.material.R.attr.colorSurface)
         )
         swipeRefresh.setOnRefreshListener {
-        fetchWallpapersOnline()
+            fetchWallpapersOnline()
         }
 
         fetchWallpapersOnline()
+        playShapesAnimation()
 
         findViewById<ImageButton>(R.id.btn_about).setOnClickListener {
             MaterialAlertDialogBuilder(this)
