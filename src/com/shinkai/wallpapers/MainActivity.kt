@@ -44,10 +44,10 @@ class MainActivity : AppCompatActivity() {
 
         swipeRefresh = findViewById(R.id.swipe_refresh)
         swipeRefresh.setColorSchemeColors(
-            MaterialColors.getColor(swipeRefresh, R.attr.colorPrimary)
+            MaterialColors.getColor(swipeRefresh, com.google.android.material.R.attr.colorPrimary)
         )
         swipeRefresh.setProgressBackgroundColorSchemeColor(
-            MaterialColors.getColor(swipeRefresh, R.attr.colorSurface)
+            MaterialColors.getColor(swipeRefresh, com.google.android.material.R.attr.colorSurface)
         )
         swipeRefresh.setOnRefreshListener {
             fetchWallpapersOnline()
